@@ -26,6 +26,11 @@ localStorage.setItem('videoplayer-current-time', data.seconds)
 
 player.on('timeupdate', throttle(onPlay, 1000));
 
+
+const recordingPlayback = () => {
     if (localStorage.getItem('videoplayer-current-time')) {
         player.setCurrentTime(localStorage.getItem('videoplayer-current-time'));
     };
+};
+
+recordingPlayback();
