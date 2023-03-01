@@ -19,17 +19,17 @@ import throttle from 'lodash.throttle';
 
 const videoFrameRef = document.querySelector('#vimeo-player');
 const player = new Player(videoFrameRef);
+const LOCALSTORAGE_KEY = 'videoplayer-current-time';
 
 const onPlay = function (data) {
-localStorage.setItem('videoplayer-current-time', data.seconds)
+    localStorage.setItem(LOCALSTORAGE_KEY, data.seconds)
 };
 
 player.on('timeupdate', throttle(onPlay, 1000));
 
-
 const recordingPlayback = () => {
-    if (localStorage.getItem('videoplayer-current-time')) {
-        player.setCurrentTime(localStorage.getItem('videoplayer-current-time'));
+      if (localStorage.getItem(LOCALSTORAGE_KEY)) {
+        player.setCurrentTime(localStorage.getItem(LOCALSTORAGE_KEY));
     };
 };
 
