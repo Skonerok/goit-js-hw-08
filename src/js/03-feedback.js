@@ -23,15 +23,15 @@ const refs = {
 };
 
 refs.form.addEventListener('submit', onFormSubmit);
-refs.email.addEventListener('input', onEmailInput);
+// refs.email.addEventListener('input', onEmailInput);
 refs.message.addEventListener('input', throttle(onTextareaInput, 500));
 
 refs.form.addEventListener('input', e => {
     formData[e.target.name] = e.target.value;
 
-    console.log(formData);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
 
-    // + JSONstringify and JSONparse
+    // console.log(formData);
 });
 
 completeForm();
@@ -39,14 +39,14 @@ completeForm();
 function onFormSubmit(evt) {
     evt.preventDefault();
 
-    console.log('Send form');
+    // console.log('Send form');
     evt.currentTarget.reset();
     localStorage.removeItem(STORAGE_KEY);
 };
 
 function onTextareaInput(evt) {
     const message = evt.target.value;
-    console.log(message);
+    // console.log(message);
     localStorage.setItem(STORAGE_KEY, message); 
 };
 
