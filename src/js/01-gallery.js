@@ -4,14 +4,12 @@
 // але виконай рефакторинг з урахуванням того, що бібліотека була встановлена 
 // через npm (синтаксис import / export).
 
-
 // Add imports above this line
 import { galleryItems } from './gallery-items';
 // Change code below this line
 
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
-
 
 const galleryRef = document.querySelector('.gallery');
 
@@ -39,12 +37,4 @@ captionsData: 'alt',
 captionsDelay: 250,
 });
 
-function onGalleryClick(event) {
-    blockBrowserAction(event);
-    if (event.target.nodeName !== 'IMG') {
-        return;
-    }
-};
-function blockBrowserAction(event) {
-    event.preventDefault();
-};
+
