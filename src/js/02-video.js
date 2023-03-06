@@ -21,8 +21,8 @@ const videoFrameRef = document.querySelector('#vimeo-player');
 const player = new Player(videoFrameRef);
 const LOCALSTORAGE_KEY = 'videoplayer-current-time';
 
-const onPlay = function (data) {
-    localStorage.setItem(LOCALSTORAGE_KEY, data.seconds)
+const onPlay = function ({seconds}) {
+    localStorage.setItem(LOCALSTORAGE_KEY, seconds)
 };
 
 player.on('timeupdate', throttle(onPlay, 1000));

@@ -10,52 +10,47 @@
 // 4. Зроби так, щоб сховище оновлювалось не частіше, ніж раз на 500 мілісекунд. 
 // Для цього додай до проекту і використовуй бібліотеку lodash.throttle.
 
+
 import throttle from 'lodash.throttle';
+
+const formRef= document.querySelector('.feedback-form');
+const emailRef = document.querySelector('input');
+const messageRef = document.querySelector('textarea');
 
 const STORAGE_KEY = 'feedback-form-state';
 
-const formData = {}; 
+const formData = {};
 
-const refs = {
-    form: document.querySelector('.feedback-form'),
-    email: document.querySelector('input'),
-    message: document.querySelector('textarea'),
-};
+formRef.addEventListener('input', throttle(onFeedbackForm, 500));
+formRef.addEventListener('submit', onFormSubmit);
 
-refs.form.addEventListener('submit', onFormSubmit);
-// refs.email.addEventListener('input', onEmailInput);
-refs.message.addEventListener('input', throttle(onTextareaInput, 500));
+populateTextarea();
 
-refs.form.addEventListener('input', e => {
-    formData[e.target.name] = e.target.value;
+function onFeedbackForm(evt) { 
+    formData[evt.target.name] = evt.target.value;
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
-
-    // console.log(formData);
-});
-
-completeForm();
+};
 
 function onFormSubmit(evt) {
     evt.preventDefault();
+    formRef[{ emailRef, messageRef }] = evt.target.elements;
+    if (emailRef.value == "" || messageRef.value == "") {
+        return alert('Усі поля форми мають бути заповнені!');
+    }
 
-    // console.log('Send form');
-    evt.currentTarget.reset();
+    console.log({ email: emailRef.value, message: messageRef.value });
+    
+    evt.target.reset();
+
     localStorage.removeItem(STORAGE_KEY);
-};
+ };
 
-function onTextareaInput(evt) {
-    const message = evt.target.value;
-    // console.log(message);
-    localStorage.setItem(STORAGE_KEY, message); 
-};
-
-function completeForm() {
+function populateTextarea() {
     const savedMessage = localStorage.getItem(STORAGE_KEY);
-
     if (savedMessage) {
-        console.log(savedMessage);
-        refs.message.value = savedMessage;
+        const parsedForm = JSON.parse(savedMessage);
+        emailRef.value = parsedForm.emailRef;
+        messageRef.value = parsedForm.messageRef;
     };
-};
-
+ };
